@@ -14,3 +14,5 @@ antigen theme dpoggi
 
 # Apply
 antigen apply
+
+export EDITOR=vim
