@@ -1,6 +1,16 @@
 import os
 import stat
 
+folder_map = {}
+folder_map['Sent Items'] = 'Sent'
+folder_map['Sent'] = 'Sent Items'
+
+def map_folder(folder):
+    if folder in folder_map.keys():
+        return folder_map[folder]
+    else:
+        return folder
+
 def is_readable_by_others(path):
     try:
         st = os.stat(path)
@@ -30,5 +40,8 @@ def get_data(account):
         return f.readline().strip()
 
 if __name__ == "__main__":
-    print get_passwd("personal-remote")
-    print get_user("personal-remote")
+    print get_passwd("test")
+    print get_user("test")
+    print map_folder("Sent Items")
+    print map_folder("Sent")
+    print map_folder("INBOX")
