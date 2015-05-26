@@ -4,3 +4,6 @@
 [submodule "vim/Vundle.vim"]
 	path = vim/bundle/Vundle.vim
 	url = https://github.com/gmarik/Vundle.vim.git
+[submodule "Menlo-for-Powerline"]
+	path = Menlo-for-Powerline
+	url = https://github.com/abertsch/Menlo-for-Powerline
