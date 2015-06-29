@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/stuart/Work/varanid-server/build_scripts'
+let g:netrw_dirhist_2='/Users/stuart/Work/varanid-server/static/jsx/components'
+let g:netrw_dirhist_3='/Users/stuart/Work/varanid-server/install/varanid'
+let g:netrw_dirhist_4='/Users/stuart/Work/varanid-server/install/varanid/scripts'

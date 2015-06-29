@@ -7,3 +7,9 @@
 [submodule "Menlo-for-Powerline"]
 	path = Menlo-for-Powerline
 	url = https://github.com/abertsch/Menlo-for-Powerline
+[submodule "libphutil"]
+	path = libphutil
+	url = https://github.com/phacility/libphutil.git
+[submodule "arcanist"]
+	path = arcanist
+	url = https://github.com/phacility/arcanist.git

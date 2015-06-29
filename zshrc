@@ -16,3 +16,5 @@ antigen theme dpoggi
 antigen apply
 
 export EDITOR=vim
+
+export PATH=$PATH:$HOME/Projects/Dotfiles/arcanist/bin

@@ -52,3 +52,13 @@ let g:airline#extensions#hunks#non_zero_only = 1
 syntax on
 set mouse=a
 set number
+
+" --- Tab settings
+set expandtab
+set tabstop=4
+set shiftwidth=4
+augroup golang
+    au!
+    au FileType go set noexpandtab
+augroup END
+
