@@ -1,0 +1,55 @@
+- hosts: all
+  become: true
+  tasks:
+      - name: add stuart
+        user:
+            name: stuart
+            password: $6$YpZnGqOjqj5SY71O$aUgWMpNBsj/nKIVWA3lGJOZxhsuHAB2Oxo/Z2PK9Djkdtgsgv.pu5X4tIZewoaaRdN4s40.d1yTEBxVyf5rmg/
+            group: wheel
+      - name: ensure package lists are up-to-date
+        pacman:
+            update_cache: yes
+      - name: ensure neovim is at the latest version
+        pacman:
+            name: neovim
+            state: latest
+      - name: ensure x2go is at the latest version
+        pacman:
+            name: x2goserver
+            state: latest
+      - name: create x2go db
+        shell: x2godbadmin --createdb
+      - name: install openbox
+        pacman:
+            name: openbox
+            state: latest
+      - name: install rxvt
+        pacman:
+            name: rxvt-unicode
+            state: latest
+      - name: install feh
+        pacman:
+            name: feh
+            state: latest
+      - name: create wallpaper directory
+        file:
+            path: /wallpaper
+            state: directory
+            mode: 0666
+      - name: install wallpaper
+        get_url:
+            url: https://static.pexels.com/photos/132037/pexels-photo-132037.jpeg
+            dest: /wallpaper/wallpaper.jpg
+            mode: 0666
+      - name: create openbox config directory
+        file:
+            path: /home/stuart/.config/openbox
+            state: directory
+            mode: 0755
+      - name: upload openbox autostart file
+        file:
+            copy:
+                src: files/autostart
+                dest: /home/stuart/.config/openbox
+
+

@@ -1,0 +1,23 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "archlinux/archlinux"
+
+  $script = <<SCRIPT
+    echo "Detecting python..."
+    which python > /dev/null
+    if (( $? > 0 )); then
+      echo "Installing python..."
+      pacman -Sy --noconfirm python
+    else
+      echo "Python already installed..."
+    fi
+SCRIPT
+
+  config.vm.network :forwarded_port, guest: 22, host: 20022
+
+  config.vm.provision "shell",
+    inline: $script
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "basics.yml"
+  end
+end
