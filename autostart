@@ -1,0 +1,4 @@
+#!/bin/sh
+
+xrdb .Xresources
+feh --bg-scale --no-fehbg /wallpaper/wallpaper.jpg
