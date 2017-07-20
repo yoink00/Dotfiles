@@ -69,7 +69,9 @@
             mode: 0600
             owner: stuart
       - name: update font cache
-        shell: fc-cache -vf ~/.fonts
+        shell: fc-cache -vf ~/.fonts && touch .donefonts
+        args:
+            creates: /root/.donefonts
         become_user: stuart
         become: true
       - name: upload Xresources
@@ -91,4 +93,45 @@
             repo: https://github.com/zsh-users/antigen.git
             depth: 1
             dest: /home/stuart/antigen
-
+        become: true
+        become_user: stuart
+      - name: upload zshrc
+        copy:
+            src: zshrc
+            dest: /home/stuart/.zshrc
+            mode: 0600
+            owner: stuart
+      - name: install python3
+        pacman:
+            name: python
+            state: latest
+      - name: install pip
+        pacman:
+            name: python-pip
+            state: latest
+      - name: install python neovim
+        pip:
+            name: neovim
+            state: latest
+      - name: install dein for nvim
+        shell: curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh && sh ./installer.sh ~/.vim/bundles
+        args:
+            creates: .vim/bundles/repos/github.com/Shougo/dein.vim/README.md
+        become: true
+        become_user: stuart
+      - name: create nvim config directory
+        file:
+            path: /home/stuart/.config/nvim
+            state: directory
+            mode: 0755
+            owner: stuart
+      - name: upload init.vim
+        copy:
+            src: init.vim
+            dest: /home/stuart/.config/nvim/init.vim
+            mode: 0600
+            owner: stuart
+      - name: install nvim plugins
+        shell: nvim -c "call dein#install()" -c "q" --headless
+        become: true
+        become_user: stuart

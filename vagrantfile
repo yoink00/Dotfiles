@@ -6,11 +6,10 @@ Vagrant.configure("2") do |config|
 
   $script = <<SCRIPT
     echo "Detecting python..."
-    which python > /dev/null
+    which python2 > /dev/null
     if (( $? > 0 )); then
       echo "Installing python..."
       pacman -Sy --noconfirm python2
-      ln -s /usr/bin/python2 /usr/bin/python
     else
       echo "Python already installed..."
     fi
@@ -22,6 +21,10 @@ SCRIPT
     inline: $script
 
   config.vm.provision "ansible" do |ansible|
+    ansible.extra_vars = {
+      ansible_python_interpreter: "/usr/bin/python2"
+    }
+
     ansible.playbook = "basics.yml"
   end
 end
