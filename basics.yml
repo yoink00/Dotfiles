@@ -18,7 +18,9 @@
             name: x2goserver
             state: latest
       - name: create x2go db
-        shell: x2godbadmin --createdb
+        shell: x2godbadmin --createdb && touch /root/x2godbadmin
+        args:
+            creates: /root/x2godbadmin
       - name: install openbox
         pacman:
             name: openbox
@@ -51,5 +53,9 @@
             copy:
                 src: files/autostart
                 dest: /home/stuart/.config/openbox
-
+      - name: clone zsh antigen
+        git:
+            repo: https://github.com/zsh-users/antigen.git
+            depth: 1
+            dest: /home/stuart/antigen
 
