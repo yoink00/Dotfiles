@@ -1,12 +1,16 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
+  config.vm.box_download_insecure = true
+
+  config.vm.network "public_network"
 
   $script = <<SCRIPT
     echo "Detecting python..."
     which python > /dev/null
     if (( $? > 0 )); then
       echo "Installing python..."
-      pacman -Sy --noconfirm python
+      pacman -Sy --noconfirm python2
+      ln -s /usr/bin/python2 /usr/bin/python
     else
       echo "Python already installed..."
     fi

@@ -6,6 +6,7 @@
             name: stuart
             password: $6$YpZnGqOjqj5SY71O$aUgWMpNBsj/nKIVWA3lGJOZxhsuHAB2Oxo/Z2PK9Djkdtgsgv.pu5X4tIZewoaaRdN4s40.d1yTEBxVyf5rmg/
             group: wheel
+            shell: /bin/zsh
       - name: ensure package lists are up-to-date
         pacman:
             update_cache: yes
@@ -37,7 +38,7 @@
         file:
             path: /wallpaper
             state: directory
-            mode: 0666
+            mode: 0777
       - name: install wallpaper
         get_url:
             url: https://static.pexels.com/photos/132037/pexels-photo-132037.jpeg
@@ -48,11 +49,43 @@
             path: /home/stuart/.config/openbox
             state: directory
             mode: 0755
+            owner: stuart
       - name: upload openbox autostart file
+        copy:
+            src: autostart
+            dest: /home/stuart/.config/openbox
+            mode: 0700
+            owner: stuart
+      - name: create fonts directory
         file:
-            copy:
-                src: files/autostart
-                dest: /home/stuart/.config/openbox
+            path: /home/stuart/.fonts
+            state: directory
+            mode: 0755
+            owner: stuart
+      - name: upload menlo
+        copy:
+            src: Menlo-for-Powerline/Menlo for Powerline.ttf
+            dest: /home/stuart/.fonts
+            mode: 0600
+            owner: stuart
+      - name: update font cache
+        shell: fc-cache -vf ~/.fonts
+        become_user: stuart
+        become: true
+      - name: upload Xresources
+        copy:
+            src: Xresources
+            dest: /home/stuart/.Xresources
+            mode: 0600
+            owner: stuart
+      - name: install zsh
+        pacman:
+            name: zsh
+            state: latest
+      - name: install git
+        pacman:
+            name: git
+            state: latest
       - name: clone zsh antigen
         git:
             repo: https://github.com/zsh-users/antigen.git
