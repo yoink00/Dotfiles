@@ -137,6 +137,23 @@
         become_user: stuart
       - name: install golang
         pacman:
-            name: golang
+            name: go
             state: latest
+      - name: install go tools
+        pacman:
+            name: go-tools
+            state: latest
+      - name: create go workspace
+        file:
+            path: /home/stuart/Projects/GOWS
+            state: directory
+            mode: 0755
+            owner: stuart
+      - name: install go code
+        shell: GOPATH=/home/stuart/Projects/GOWS go get -u github.com/nsf/gocode
+        args:
+            chdir: /home/stuart/Projects/GOWS
+            creates: /home/stuart/Projects/GOWS/bin/gocode
+        become: true
+        become_user: stuart
 
