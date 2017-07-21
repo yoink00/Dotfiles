@@ -9,11 +9,23 @@ antigen bundle command-not-found
 # Syntax highlighting
 antigen bundle zsh-users/zsh-syntax-highlighting
 
+# Git
+antigen bundle git
+
+# Deer
+antigen bundle Vifon/deer
+
 # Load a theme
 antigen theme dpoggi
 
 # Apply
 antigen apply
+
+autoload -U deer
+zle -N deer
+
+bindkey -v
+bindkey 'k' deer
 
 export EDITOR=nvim
 
